@@ -15,7 +15,7 @@ app.use(express.static(__dirname + '/public'));
 io.on('connection', function (socket) {
     console.log("User connected!");
 
-    if (currentPlayer.length != null) {
+    if (currentPlayer[0].username != 'default') {
         switch (currentPlayer.length) {
             case 0 | 1:
                 console.log("currentPlayer is 0 or 1!");
@@ -25,7 +25,7 @@ io.on('connection', function (socket) {
                 console.log("currentPlayer is bigger than 2!");
                 socket.emit('too many');
         }
-    } else if (currentPlayer.length == null) {
+    } else if (currentPlayer[0].username == 'default') {
         console.log("currentPlayer is null!");
         io.emit('input data');
     }

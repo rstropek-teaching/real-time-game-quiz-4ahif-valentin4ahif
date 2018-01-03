@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "build": "tsc --watch",
     "start": "browser-sync start --server --files='*.html,*.js,*.css'",
-    "comp": "cpx "
   },
   "author": "",
   "license": "ISC",

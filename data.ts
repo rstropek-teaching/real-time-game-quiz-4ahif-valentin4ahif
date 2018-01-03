@@ -12,7 +12,9 @@ export interface IList {
 }
 
 //safes the two current players
-export let currentPlayer: IPlayer[];
+export let currentPlayer: IPlayer[] = [
+    { id: 0, username: 'default' }
+];
 
 //All Players get safed in this list
 export const playerList: IPlayer[] = [

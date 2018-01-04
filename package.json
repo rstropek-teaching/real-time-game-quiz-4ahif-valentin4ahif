@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc --watch",
-    "start": "browser-sync start --server --files='*.html,*.js,*.css'",
+    "start": "browser-sync start --server --files='*.html,*.js,*.css'"
   },
   "author": "",
   "license": "ISC",

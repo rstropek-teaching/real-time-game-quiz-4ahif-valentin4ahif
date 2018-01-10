@@ -1,9 +1,0 @@
-body{
-    background-image: linear-gradient(to top, rgba(200, 200, 200, 0.8) 1%, rgba(100, 255, 20, 0.8) 100%);
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-}
-
-h1, h2, h3{
-    text-align: center;
-}

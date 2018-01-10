@@ -4,69 +4,32 @@ body{
     background-attachment: fixed;
 }
 
-/*button{
-    background-color: #4CAF50;
-    border: none;
-    color: white;
+h1, form{
     text-align: center;
-    border: 2px solid #4CAF50;
-    font-size: 20px;
-    -webkit-transition-duration: 0.4s;
-    transition-duration: 0.2s;
-}
-
-button:hover {
-    background-color: #ffffff;
-    color: black;
-}
-
-table{
-    width: 94%;
-    margin-left: 3%;
-    border-collapse: unset;
-}
-
-tr:nth-child(even){
-    background-color: #f2f2f2;
-}
-
-tr:nth-child(odd){
-    background-color: #d6d6d6;
-}
-
-td{
-    font-size: 20px;
-}
-
-.pokenameTD{
-    align-content: left;
-}
-
-.buttonTD{
-    text-align: right;
 }
 
 #outerDiv{
-    background-color: lightblue;
-    width: 70%;
-    margin: 0 auto;
-    border: 2px solid black;
-}
-
-#innerDiv{
-    padding: 20px 0px;
-}
-
-#btnPrev, #btnNext{
-    margin-top: 10px;
-    width: 49%;
-}
-
-#btnBack{
-    margin-top: 10px;
-    width: 100%;
-}
-*/
-h1{
     text-align: center;
+}
+#gameDiv{
+    display: inline-block;
+}
+
+#gameFieldTable td{
+    width: 80px;
+    height: 80px;
+    padding: 0;
+    border: 1px solid black;
+}
+
+#gameFieldTable td.neutral{
+    background-color: rgb(230, 230, 230);
+}
+
+#gameFieldTable td.one{
+    background-color: rgb(185, 0, 0);
+}
+
+#gameFieldTable td.two{
+    background-color: rgb(0, 34, 185);
 }

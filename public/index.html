@@ -3,25 +3,39 @@
 
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="index.css">
     <title>Pentago!</title>
-</head>
-
-<body>
-
-    <div id="outerDiv">
-        <h1>Pentago!</h1>
-        <div id="gameDiv">
-
-        </div>
-        <p id="turnParagraph"></p>
-        <h2 id="winner"></h2>
-    </div>
 
     <script src="jquery.min.js"></script>
     <script src="/socket.io/socket.io.js"></script>
-    <script src="/data.js"></script>
-    <script src="/client.js"></script>
+    <script src="./client.js"></script>
+
+    <link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+    <div id="outerDiv">
+        <h1>Pentago!</h1>
+        <div id="gameDiv">
+            <table id="gameFieldTable">
+
+            </table>
+        </div>
+        <div id="loginDiv">
+            <h1>Please enter your username here:</h1>
+            <form>
+                Username:
+                <input type="text" name="username" placeholder="e.g. valentin.s" id="username">
+                <input type="submit" value="Submit" onclick="safeData()">
+            </form>
+        </div>
+    </div>
+    <form id="turnData">
+        Which field would you like to turn around?
+        <input type="number" name="fieldNr" id="fieldNumber" placeholder="1, 2, 3 or 4?">
+        <br> In which direction would you like to turn the field around? (0=to the left, 1=to the right)
+        <input type="number" name="dir" id="direction" placeholder="0 or 1?">
+    </form>
+
 </body>
 
 </html>

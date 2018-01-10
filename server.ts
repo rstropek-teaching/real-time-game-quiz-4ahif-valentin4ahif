@@ -1,7 +1,7 @@
 import * as express from "express";
 import * as http from 'http';
 import * as sio from 'socket.io';
-import { playerList, highscores, IPlayer, IList, gameField, States, currentPlayer } from './data';
+import { playerList, highscores, IPlayer, IList, gameField, initGameField, States, currentPlayer, getCurrentPlayer } from './data';
 
 const app = express();
 const server = http.createServer(app);
@@ -15,7 +15,9 @@ app.use(express.static(__dirname + '/public'));
 io.on('connection', function (socket) {
     console.log("User connected!");
 
+    //Username input
     if (currentPlayer[0].username != 'default') {
+        console.log('' || currentPlayer[0].username);
         switch (currentPlayer.length) {
             case 0 | 1:
                 console.log("currentPlayer is 0 or 1!");
@@ -26,36 +28,56 @@ io.on('connection', function (socket) {
                 socket.emit('too many');
         }
     } else if (currentPlayer[0].username == 'default') {
-        console.log("currentPlayer is null!");
+        console.log('' || currentPlayer[0].username);
+        console.log("currentPlayer is on default!");
         io.emit('input data');
     }
 
+    //START OF GAME
+    initGameField();
+    //io.emit('updateGame', gameField);
+
+    //store username of client two times: one time for the list of players and another time for the storage of the current player
     socket.on('add player', function (username) {
-        console.log("add player called!");
+        console.log("add player called! " || username);
         const newPlayer: IPlayer = {
             id: playerList.length + 1,
             username: username
         };
         playerList.push(newPlayer);
         currentPlayer.push(newPlayer);
+        io.emit('client data', currentPlayer.length);
         console.log("safed playerdata!");
+
+        //prepareGame();
     })
 
+    //if one client disconnects, a error event sent to client
     socket.on('disconnect', function () {
         console.log("User disconnected");
-        //currentPlayer aktualisieren
-        //winner announcen
+        //TODO
+        //update "currentPlayer"
+        //set winner or disconnect with error
         io.emit("end", 1);
     });
 
+    //update the game field and check if there is a winner
     socket.on('turn', function (x, y, fieldNumber, direction, playerID) {
         console.log("turn called!");
         //updateField(x, y, fieldNumber, direction, playerID);
         //checkWinner();
     });
+
+    //send logged in player the gameField
+    function prepareGame() {
+        console.log('sending gameField for prepare');
+        io.emit('updateGame', gameField);
+    }
 });
 
+//update the gamefield: setting colors and turning the selected field
 function updateField(x: number, y: number, fN: number, dir: number, ID: number) {
+    console.log("updateField called!");
     //Abfrage ob Feld frei ist geschieht bereits beim Client!!!
     if (ID === currentPlayer[0].id) {
         gameField[x][y] = States.one;
@@ -70,10 +92,11 @@ function updateField(x: number, y: number, fN: number, dir: number, ID: number) 
     turnField(fN, dir);
 }
 
+//turn the selected field arount 90 degrees in the selected direction
 function turnField(fN: number, dir: number) {
-    if (dir === 0) { //Linksdrehung
+    if (dir === 0) { //turn left
 
-    } else if (dir === 1) { //Rechtsdrehung
+    } else if (dir === 1) { //turn right
         let x: number = 10;
         let y: number = 10;
         switch (fN) {
@@ -96,31 +119,15 @@ function turnField(fN: number, dir: number) {
             default:
                 console.log("Something messed up with the fieldNumber!");
         }
-
-        gameField[0][0] = States.one;
-        gameField[1][1] = States.one;
-        gameField[2][3] = States.one;
-        gameField[4][0] = States.one;
-        gameField[3][3] = States.one;
-
-        for (let i = 0; i < 7; i++) {
-            for (let j = 0; j < 7; j++) {
-                console.log("" + gameField[i][j].toString());
-            }
-        }
-        gameField[0].map((col, i) => gameField.map(row => row[i]));
-        for (let i = 0; i < 7; i++) {
-            for (let j = 0; j < 7; j++) {
-                console.log("" + gameField[i][j].toString());
-            }
-        }
     }
 }
 
+//checks if a player has won the game
 function checkWinner() {
 
 }
 
+//opens the server
 server.listen(3000, function () {
     console.log('listening on *:3000');
 });

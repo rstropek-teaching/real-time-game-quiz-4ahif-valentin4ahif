@@ -1,3 +1,6 @@
+/*NOTE: NO export-Statements in this "data.ts"!*/
+
+
 //interface to safe playerdata
 export interface IPlayer {
     id: number;
@@ -16,6 +19,16 @@ export let currentPlayer: IPlayer[] = [
     { id: 0, username: 'default' }
 ];
 
+//returns "currentPlayer"
+export function getCurrentPlayer() {
+    return currentPlayer;
+}
+
+//sets the "currentPlayer"
+export function setCurrentPlayer(cP: IPlayer[]) {
+    currentPlayer = cP;
+}
+
 //All Players get safed in this list
 export const playerList: IPlayer[] = [
     { id: 1, username: 'vschuetz' }
@@ -30,17 +43,21 @@ export const highscores: IList[] = [
 //one=player1 claimed this place
 //two=player2 claimed this place
 export enum States {
-    neutral,
-    one,
-    two
+    neutral = 'neutral',
+    one = 'one',
+    two = 'two'
 }
 
+//safes the claimed and free places
 export let gameField: States[][];
-gameField = [];
 
-for (let i = 0; i < 7; i++) {
-    gameField[i] = Array(7);
-    for (let j = 0; j < 7; j++) {
-        gameField[i][j] = States.neutral;
+//fills field with free spaces
+export function initGameField() {
+    gameField = [];
+    for (let i = 0; i < 6; i++) {
+        gameField[i] = Array(7);
+        for (let j = 0; j < 6; j++) {
+            gameField[i][j] = States.neutral;
+        }
     }
 }
